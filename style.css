@@ -14,34 +14,50 @@ body {
 }
 
 #buttons {
-  padding-top: 2rem;
-  display: flex;
+  padding: 2rem 0;
 }
 
 #buttons button {
   background-color: transparent;
+  font-size: .65rem;
+  color: azure;
   border: 1px solid black;
-  padding: .45rem .65rem;
+  padding: .5rem;
+  border-radius: 50%;
+  transition: all .45s ease;
 }
 
-#buttons button:first-child {
-  border-radius: 5px 0 0 5px;
-  border-right-width: 0;
-}
-
-#buttons button:last-child {
-  border-radius: 0 5px 5px 0;
-  border-left-width: 0;
+#buttons button:nth-child(2) {
+  margin: 0 .75rem;
 }
 
 #buttons button.selected {
   background-color: tomato;
-  color: whitesmoke;
+  font-size: 1rem;
   font-weight: bold;
+}
+
+#buttons button:not(.selected) {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 #speed {
   height: 85vh;
   color: rgb(76, 120, 202);
   font-size: 8em;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #303333;
+  }
+
+  #buttons button {
+    color: azure;
+    border-color: azure;
+  }
+
+  #buttons button:not(.selected) {
+    background-color: rgba(240, 255, 255, 0.1);
+  }
 }
