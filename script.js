@@ -72,6 +72,8 @@ const convertSpeed = (speedinMps) => {
 if ("geolocation" in navigator) {
   navigator.geolocation.watchPosition(
     (position) => {
+      if (position.coords.accuracy > 20) return;
+
       const speed = position.coords.speed; // Speed in meters per second
       // Convert the speed, or display N/A if none
       if (speed !== null) {
