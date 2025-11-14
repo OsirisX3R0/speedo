@@ -1,13 +1,20 @@
+// Get element references to speed indicator and buttons
 const speedEl = document.querySelector("#speed");
 const buttons = document.querySelectorAll("#buttons button");
+
+// Grab speed type from local storage
 let speedType = localStorage.getItem("speedType");
+
+// If no speed type is found, default to mph
 if (!speedType) {
   speedType = "mph";
   localStorage.setItem("speedType", "mph");
 }
 
+// Select default speed type
 document.querySelector(`.${speedType}`).classList.add("selected");
 
+// When a button is clicked, mark it selected and set the speed type
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.className.includes("selected")) {
@@ -20,6 +27,10 @@ buttons.forEach((button) => {
   });
 });
 
+/**
+ * Convert meters per second `(mps)` to kilometers per hour `(kph)`
+ * @param {Number} mps
+ */
 const mpsToKph = (mps) => {
   const kps = mps / 1000;
   const kph = kps * 3600;
@@ -27,6 +38,10 @@ const mpsToKph = (mps) => {
   return kph;
 };
 
+/**
+ * Convert meters per second `(mps)` to miles per hour `(mph)`
+ * @param {Number} mps
+ */
 const mpsToMph = (mps) => {
   const conversionFactor = 0.621371;
   const kph = mpsToKph(mps);
@@ -37,16 +52,20 @@ const mpsToMph = (mps) => {
 
 /**
  * Converts speed
- * @param {Number} speed
+ * @param {Number} speedinMps Speed in meters per second (mps)
  */
-const convertSpeed = (speed) => {
+const convertSpeed = (speedinMps) => {
+  let convertedSpeed = 0;
+
   switch (speedType) {
     case "mph":
-      return mpsToMph(speed);
+      convertedSpeed = mpsToMph(speedinMps);
     case "kph":
-      return mpsToKph(speed);
+      convertedSpeed = mpsToKph(speedinMps);
     default:
-      return speed;
+      convertedSpeed = speedinMps;
+
+      return convertedSpeed.toFixed(2);
   }
 };
 
@@ -54,12 +73,11 @@ if ("geolocation" in navigator) {
   navigator.geolocation.watchPosition(
     (position) => {
       const speed = position.coords.speed; // Speed in meters per second
+      // Convert the speed, or display N/A if none
       if (speed !== null) {
-        speedEl.innerHTML = speed.toFixed(2);
-        // console.log(`Current speed: ${speed} m/s`);
+        speedEl.innerHTML = convertSpeed(speed);
       } else {
         speedEl.innerHTML = "N/A";
-        // console.log("Speed information is not available.");
       }
     },
     (error) => {
@@ -74,3 +92,8 @@ if ("geolocation" in navigator) {
 } else {
   console.log("Geolocation is not supported by this browser.");
 }
+
+// For testing purposes
+// setInterval(() => {
+//   speedEl.innerHTML = (Math.random() * 10).toFixed(2);
+// }, 1000);
