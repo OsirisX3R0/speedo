@@ -55,7 +55,7 @@ if ("geolocation" in navigator) {
     (position) => {
       const speed = position.coords.speed; // Speed in meters per second
       if (speed !== null) {
-        speedEl.innerHTML = speed;
+        speedEl.innerHTML = speed.toFixed(2);
         // console.log(`Current speed: ${speed} m/s`);
       } else {
         speedEl.innerHTML = "N/A";
