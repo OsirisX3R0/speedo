@@ -35,6 +35,7 @@ body {
   padding: .5rem;
   border-radius: 50%;
   transition: all .45s ease;
+  cursor: pointer;
 }
 
 #buttons button:nth-child(2) {
@@ -55,6 +56,7 @@ body {
   height: 85vh;
   color: rgb(76, 120, 202);
   font-size: 8em;
+  cursor: default;
 }
 
 @media (prefers-color-scheme: dark) {
