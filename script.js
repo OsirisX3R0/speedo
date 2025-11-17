@@ -31,24 +31,13 @@ buttons.forEach((button) => {
  * Convert meters per second `(mps)` to kilometers per hour `(kph)`
  * @param {Number} mps
  */
-const mpsToKph = (mps) => {
-  const kps = mps / 1000;
-  const kph = kps * 3600;
-
-  return kph;
-};
+const mpsToKph = (mps) => mps * 3.6;
 
 /**
  * Convert meters per second `(mps)` to miles per hour `(mph)`
  * @param {Number} mps
  */
-const mpsToMph = (mps) => {
-  const conversionFactor = 0.621371;
-  const kph = mpsToKph(mps);
-  const mph = kph * conversionFactor;
-
-  return mph;
-};
+const mpsToMph = (mps) => mps * 2.237;
 
 /**
  * Converts speed
