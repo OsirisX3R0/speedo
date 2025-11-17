@@ -49,28 +49,37 @@ const convertSpeed = (speedinMps) => {
   switch (speedType) {
     case "mph":
       convertedSpeed = mpsToMph(speedinMps);
+      break;
     case "kph":
       convertedSpeed = mpsToKph(speedinMps);
+      break;
     default:
       convertedSpeed = speedinMps;
+  }
 
-      return convertedSpeed.toFixed(2);
+  return convertedSpeed.toFixed(2);
+};
+
+/**
+ *
+ * @param {GeolocationPosition} position
+ * @returns
+ */
+const calculateSpeed = (position) => {
+  if (position.coords.accuracy > 20) return;
+
+  const speed = position.coords.speed; // Speed in meters per second
+  // Convert the speed, or display N/A if none
+  if (speed !== null) {
+    speedEl.innerHTML = convertSpeed(speed);
+  } else {
+    speedEl.innerHTML = "N/A";
   }
 };
 
 if ("geolocation" in navigator) {
   navigator.geolocation.watchPosition(
-    (position) => {
-      if (position.coords.accuracy > 20) return;
-
-      const speed = position.coords.speed; // Speed in meters per second
-      // Convert the speed, or display N/A if none
-      if (speed !== null) {
-        speedEl.innerHTML = convertSpeed(speed);
-      } else {
-        speedEl.innerHTML = "N/A";
-      }
-    },
+    calculateSpeed,
     (error) => {
       console.error(`Error occurred: ${error.message}`);
     },
@@ -86,5 +95,10 @@ if ("geolocation" in navigator) {
 
 // For testing purposes
 // setInterval(() => {
-//   speedEl.innerHTML = (Math.random() * 10).toFixed(2);
+//   calculateSpeed({
+//     coords: {
+//       accuracy: 0,
+//       speed: Math.random() * 0.25,
+//     },
+//   });
 // }, 1000);
