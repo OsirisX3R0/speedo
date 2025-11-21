@@ -13,6 +13,13 @@ body {
   align-items: center;
 }
 
+.alert {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: hsla(0, 30%, 70%, 1);
+  margin-top: .5rem;
+  padding: .5rem;
+}
+
 #buttons {
   padding: 2rem 0;
   display: flex;

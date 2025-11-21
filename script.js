@@ -1,4 +1,5 @@
 // Get element references to speed indicator and buttons
+const body = document.querySelector("body");
 const speedEl = document.querySelector("#speed");
 const buttons = document.querySelectorAll("#buttons button");
 
@@ -69,11 +70,11 @@ const calculateSpeed = (position) => {
   if (position.coords.accuracy > 20) return;
 
   const speed = position.coords.speed; // Speed in meters per second
-  // Convert the speed, or display N/A if none
+  // Convert the speed, or display "XX.XX" if none
   if (speed !== null) {
     speedEl.innerHTML = convertSpeed(speed);
   } else {
-    speedEl.innerHTML = "N/A";
+    speedEl.innerHTML = "XX.XX";
   }
 };
 
@@ -90,7 +91,10 @@ if ("geolocation" in navigator) {
     }
   );
 } else {
-  console.log("Geolocation is not supported by this browser.");
+  const alert = document.createElement("div");
+  alert.innerHTML = "Geolocation is not supported by this browser.";
+  alert.classList.add("alert");
+  body.prepend(alert);
 }
 
 // For testing purposes
